@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=your-secret-key
+      - ALLOWED_HOSTS=localhost
+      - MONGO_URI=mongodb://mongo:27017/knowledge_base
+
+  frontend:
+    build: ./frontend/ai-chatbot-dashboard
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/ai-chatbot-dashboard:/app
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
